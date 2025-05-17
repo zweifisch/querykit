@@ -9,7 +9,7 @@ Add `querykit` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:querykit, "~> 0.1.0"}
+    {:querykit, "~> 0.2.0"}
   ]
 end
 ```
@@ -27,4 +27,11 @@ Query with parameters:
 ```elixir
 ~q(SELECT * FROM users WHERE id = #{id})
 # {"SELECT * FROM users WHERE id = $1", [id]}
+```
+
+Ecto schema support:
+
+```elixir
+~q"SELECT * FROM #{User} WHERE active = #{1}"
+# {"SELECT * FROM users WHERE active = $1", [1]}
 ```

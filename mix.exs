@@ -5,7 +5,7 @@ defmodule Querykit.MixProject do
     [
       name: "Querykit",
       app: :querykit,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -24,7 +24,9 @@ defmodule Querykit.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+      {:ecto_sql, "~> 3.10", only: :test},
+      {:ecto_sqlite3, "~> 0.10", only: :test}
     ]
   end
 

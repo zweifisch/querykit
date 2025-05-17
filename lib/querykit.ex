@@ -32,7 +32,6 @@ defmodule Querykit do
       iex> name = "Alice"
       iex> ~q"SELECT * FROM users WHERE name = #{name}"
       {"SELECT * FROM users WHERE name = $1", ["Alice"]}
-
   """
   defmacro sigil_q({:<<>>, _meta, parts}, _modifiers) do
     {sql, args} =
@@ -41,7 +40,13 @@ defmodule Querykit do
           {sql <> binary, args}
 
         {:"::", _, [{{:., _, _}, _, [expr]}, {:binary, _, _}]}, {sql, args} ->
-          {sql <> "$#{length(args) + 1}", args ++ [expr]}
+          value = Macro.expand(expr, __CALLER__)
+
+          if is_atom(value) and function_exported?(value, :__schema__, 1) do
+            {sql <> value.__schema__(:source), args}
+          else
+            {sql <> "$#{length(args) + 1}", args ++ [expr]}
+          end
       end)
 
     quote do
