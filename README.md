@@ -22,7 +22,7 @@ Import Querykit in your module:
 import Querykit
  ```
 
-Query with a single parameter:
+Query with parameters:
 
 ```elixir
 ~q(SELECT * FROM users WHERE id = #{id})
